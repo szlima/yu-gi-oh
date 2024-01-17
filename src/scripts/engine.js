@@ -13,15 +13,16 @@ const state= {
         player: document.querySelector("#player-field-card"),
         computer: document.querySelector("#computer-field-card")
     },
+    playerSides: {
+        player: "player-cards",
+        playerBox: document.getElementById("player-cards"),
+        computer: "computer-cards",
+        computerBox: document.getElementById("computer-cards")
+    },
     actions: {
         button: document.querySelector("#next-duel")
     }
 };
-
-const playerSides= {
-    player: "player-cards",
-    computer: "computer-cards"
-}
 
 const pathImages= "./src/assets/icons/";
 const cardData= [
@@ -63,7 +64,7 @@ async function createCardImage(idCard, fieldSide){
     cardImage.setAttribute("data-id", idCard);
     cardImage.classList.add("card");
 
-    if(fieldSide === playerSides.player){
+    if(fieldSide === state.playerSides.player){
 
         cardImage.addEventListener("mouseover", () => {
             drawSelectCard(idCard);
@@ -75,6 +76,28 @@ async function createCardImage(idCard, fieldSide){
     }
 
     return cardImage;
+}
+
+async function setCardsField(cardId){
+    await removeAllCardsImages();
+
+    let computerCardId= await getRandomCardId();
+
+    state.fieldCards.player.style.display= "block";
+    state.fieldCards.computer.style.display= "block";
+
+    state.fieldCards.player.src= cardData[cardId].img;
+    state.fieldCards.computer.src= cardData[computerCardId].img;
+}
+
+async function removeAllCardsImages(){
+    const {computerBox, playerBox}= state.playerSides;
+
+    let imgElements= computerBox.querySelectorAll("img");
+    imgElements.forEach(img => img.remove());
+
+    imgElements= playerBox.querySelectorAll("img");
+    imgElements.forEach(img => img.remove());
 }
 
 async function drawSelectCard(index){
@@ -92,8 +115,8 @@ async function drawCards(cardNumbers, fieldSide){
 }
 
 function init(){
-    drawCards(5, playerSides.player);
-    drawCards(5, playerSides.computer);
+    drawCards(5, state.playerSides.player);
+    drawCards(5, state.playerSides.computer);
 }
 
 init();
