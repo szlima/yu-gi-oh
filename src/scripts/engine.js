@@ -97,7 +97,7 @@ async function setCardsField(cardId){
 
 async function drawButton(text){
     state.actions.button.innerText= text.toUpperCase();
-    state.actions.button.style.display= "block";
+    state.actions.button.style.visibility= "visible";
 }
 
 async function updateScore(){
@@ -151,7 +151,7 @@ async function resetDuel(){
     state.cardSprites.avatar.src= "";
     state.cardSprites.name.innerText= "Selecione";
     state.cardSprites.type.innerText= "uma carta";
-    state.actions.button.style.display= "none";
+    state.actions.button.style.visibility= "hidden";
 
     state.fieldCards.player.style.display= "none";
     state.fieldCards.computer.style.display= "none";
